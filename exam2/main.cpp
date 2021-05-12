@@ -18,7 +18,7 @@
 
 
 int PredictGesture(float* output); 
-int machine_learning();
+void machine_learning(Arguments *model, Reply *out) 
 void ac_capture_mode();
 RPCFunction rpcCaptureAC(&ac_capture_mode, "capture");
 BufferedSerial pc(USBTX, USBRX);
@@ -84,7 +84,7 @@ int PredictGesture(float* output) {
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------
-int machine_learning(Arguments *model, Reply *out) {
+void machine_learning(Arguments *model, Reply *out) {
 
   // Whether we should clear the buffer next time we fetch data
   bool should_clear_buffer = false;
@@ -304,7 +304,7 @@ int WIFI_Function(){
     return 0;
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-int main(int argc, const char** argv) {
+int main() {
     //The mbed RPC classes are now wrapped to create an RPC enabled version - see RpcClasses.h so don't add to base class
 
     // receive commands, and send back the responses
