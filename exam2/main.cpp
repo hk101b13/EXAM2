@@ -18,7 +18,7 @@
 
 
 int PredictGesture(float* output); 
-void machine_learning() 
+void machine_learning(int *out) 
 void ac_capture_mode();
 RPCFunction rpcCaptureAC(&ac_capture_mode, "capture");
 BufferedSerial pc(USBTX, USBRX);
@@ -84,7 +84,7 @@ int PredictGesture(float* output) {
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------
-void machine_learning() {
+void machine_learning(int *out) {
 
   // Whether we should clear the buffer next time we fetch data
   bool should_clear_buffer = false;
