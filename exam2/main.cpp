@@ -41,7 +41,7 @@ EventQueue mqtt_queue;
 Thread t;
 EventQueue queue;
 Ticker flipper;
-
+int gesture_index;
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Return the result of the last prediction
 int PredictGesture(float* output) {
@@ -84,14 +84,13 @@ int PredictGesture(float* output) {
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------
-int machine_learning() {
+int machine_learning(Arguments *model, Reply *out) {
 
   // Whether we should clear the buffer next time we fetch data
   bool should_clear_buffer = false;
   bool got_data = false;
 
   // The gesture index of the prediction
-  int gesture_index;
 
   // Set up logging.
   static tflite::MicroErrorReporter micro_error_reporter;
@@ -182,7 +181,11 @@ int machine_learning() {
       error_reporter->Report(config.output_message[gesture_index]);
     }
   }
-  return gesture_index;
+  char buffer[200], outbuf[256];
+  char strings[20];
+  strcpy(buffer, strings);
+  RPC::call(buffer, outbuf);
+  out->putData(gesture_index) ;
 }
 
 void ac_capture_mode(){
@@ -301,7 +304,7 @@ int WIFI_Function(){
     return 0;
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-int main() {
+int main(int argc, const char** argv) {
     //The mbed RPC classes are now wrapped to create an RPC enabled version - see RpcClasses.h so don't add to base class
 
     // receive commands, and send back the responses
